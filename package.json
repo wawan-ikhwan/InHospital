@@ -1,0 +1,23 @@
+{
+  "name": "inhospital",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^7.31.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.23.4"
+  },
+  "dependencies": {
+    "@hapi/hapi": "^20.1.5",
+    "bcrypt": "^5.0.1",
+    "dotenv": "^10.0.0",
+    "nanoid": "^3.1.23"
+  }
+}
