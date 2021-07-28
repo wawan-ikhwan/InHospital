@@ -47,7 +47,7 @@ function loginHandler(request, h) {
     if (berhasilLogin) {
       const randomCookieGen = nanoid();
       h.state('sesi', randomCookieGen, {
-        ttl: 10000,
+        ttl: 60000,
         isSecure: false,
       });
       const currentUserIndex = users.findIndex((user) => user.name === username);
@@ -118,8 +118,9 @@ function readPatientHandler(request, h) {
 function updatePatientHandler(request, h) {
   let response = 'pasien gagal diubah!';
   const {
-    id, nama, umur, ruangan, penyakit,
+    nama, umur, ruangan, penyakit,
   } = request.payload;
+  const { id } = request.params;
   const userIndex = users.findIndex((user) => user.sesi === request.state.sesi);
   if (userIndex === -1) {
     return h.response('autentikasi dibutuhkan!').code(401);
@@ -135,11 +136,26 @@ function updatePatientHandler(request, h) {
   if (patientIndex === -1) {
     return h.response('id pasien tidak ditemukan');
   }
+
+  const keepNama = (nama !== undefined && nama !== '') ? nama : patients[patientIndex].name;
+  const keepUmur = (umur !== undefined && umur !== '') ? umur : patients[patientIndex].age;
+  const keepRuangan = (ruangan !== undefined && ruangan !== '') ? ruangan : patients[patientIndex].room;
+  const keepPenyakit = (penyakit !== undefined && penyakit !== '') ? penyakit : patients[patientIndex].disease;
+
+  // eslint-disable-next-line max-len
+  const isDataPasienInvalid = keepNama === patients[patientIndex].name && keepUmur === patients[patientIndex].age && keepRuangan === patients[patientIndex].room && keepPenyakit === patients[patientIndex].disease;
+
+  if (isDataPasienInvalid) {
+    return h.response('data pasien invalid!').code(400);
+  }
+
   patients[patientIndex] = {
-    name: nama,
-    age: umur,
-    room: ruangan,
-    disease: penyakit,
+    id,
+    entry: new Date().toString(),
+    name: keepNama,
+    age: keepUmur,
+    room: keepRuangan,
+    disease: keepPenyakit,
   };
   updatePatients(patients);
   response = `${patients[patientIndex].name} berhasil diubah!`;
@@ -148,7 +164,7 @@ function updatePatientHandler(request, h) {
 
 function deletePatientHandler(request, h) {
   let response = 'pasien gagal dihapus!';
-  const { id } = request.payload;
+  const { id } = request.params;
   const userIndex = users.findIndex((user) => user.sesi === request.state.sesi);
   if (userIndex === -1) {
     return h.response('autentikasi dibutuhkan!').code(401);
@@ -166,7 +182,7 @@ function deletePatientHandler(request, h) {
   }
   patients.splice(patientIndex, 1);
   updatePatients(patients);
-  response = `${patients[patientIndex].name} berhasil dihapus!`;
+  response = 'berhasil dihapus!';
   return h.response(response);
 }
 

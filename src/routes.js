@@ -42,12 +42,12 @@ const routes = [
   },
   {
     method: 'PUT',
-    path: '/patient',
+    path: '/patient/{id}',
     handler: updatePatientHandler,
   },
   {
     method: 'DELETE',
-    path: '/patient',
+    path: '/patient/{id}',
     handler: deletePatientHandler,
   },
 ];
