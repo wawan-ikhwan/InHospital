@@ -2,7 +2,13 @@
   {
     "name": "wawan",
     "pw": "$2b$10$3bjj4024xuTcgK628K2YhuzMs5brcrg7PpctOVRaWDUeSkj.5tv86",
-    "sesi": "77b8344a2adbed01",
+    "sesi": "db4b070080d1f70a",
     "previlege": "admin"
+  },
+  {
+    "name": "InHospital21",
+    "pw": "$2b$10$DHFBPKgxZWnLQkf6At5zhufZ31fOp9Ah6bMIuTWStIB/QtIb3v/L.",
+    "sesi": "5bb37aba2c67314c",
+    "previlege": "pengunjung"
   }
 ]

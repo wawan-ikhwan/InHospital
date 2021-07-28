@@ -1,0 +1,16 @@
+Sebuah aplikasi untuk mengurus pasien
+
+Setelah user register, secara default user adalah pengunjung.
+
+Common Route dan Method:
+/   [GET]
+/login  [GET, POST]
+/register [GET, POST]
+/patient [GET, POST, PUT, DELETE]
+/patient/{id} [GET, PUT, DELETE]
+
+Hak Akses User:
+    admin = "bisa melihat semuanya kecuali password."
+    dokter = menambahkan pasien, membaca semua/spesifik pasien, mengubah pasien, menghapus pasien.
+    suster = menambahkan pasien, membaca semua/spesifik pasien, mengubah pasien, menghapus pasien.
+    pengunjung = membaca pasien tertentu (spesifik)

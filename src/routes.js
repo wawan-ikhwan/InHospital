@@ -5,6 +5,7 @@ const {
   logoutHandler,
   createPatientHandler,
   readPatientHandler,
+  readSpecifyPatientHandler,
   updatePatientHandler,
   deletePatientHandler,
 } = require('./handlers');
@@ -39,6 +40,11 @@ const routes = [
     method: 'GET',
     path: '/patient',
     handler: readPatientHandler,
+  },
+  {
+    method: 'GET',
+    path: '/patient/{id}',
+    handler: readSpecifyPatientHandler,
   },
   {
     method: 'PUT',
