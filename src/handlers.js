@@ -21,7 +21,7 @@ function registerHandler(request, h) {
   let response = '<html><head><title>Register Page</title></head><body><h3>Register</h3><form method="post" action="./register">Username: <input type="text" name="username"><br>Password: <input type="password" name="password"><br/><input type="submit" value="Register"></form></body></html>';
   if (request.method === 'post') { // Cek jika client menggunakan method post.
     const { username, password } = request.payload; // mendapatkan data username dan passowrd dari client
-    const berhasilDaftar = (username.length >= 4 && password.length >= 8); // cek validasi data
+    const berhasilDaftar = (username.length >= 4 && password.length >= 8 && !username.includes(' ')); // cek validasi data
     if (berhasilDaftar) { // jika data valid
       users.push({ // masukkan data baru dari array users
         name: username,
@@ -32,7 +32,7 @@ function registerHandler(request, h) {
       updateUsers(users); // mengupdate file users.json ke data yang terbaru
       response = 'data sukses didaftarkan!, kembali ke <a href="/login">login</a>';
     } else {
-      response = 'data gagal di<a href="/register">daftar</a>kan!<br>username minimal 4 dan password minimal 8';
+      response = 'data gagal di<a href="/register">daftar</a>kan!<br>username minimal 4 tanpa whitespace dan password minimal 8';
     }
   }
   return h.response(response);
@@ -100,6 +100,11 @@ function createPatientHandler(request, h) {
 
 function readPatientHandler(request, h) { // mendapatkan semua data pasien
   let response = 'pasien gagal didapat!';
+  const { nama } = request.query;
+  let filter = false;
+  if (nama !== '' && nama !== undefined) { // cek jika ada parameter
+    filter = true;
+  }
   const userIndex = users.findIndex((user) => user.sesi === request.state.sesi); // mengecek siapakah user saat ini berdasarkan sesi
   if (userIndex === -1) { // jika tidak ada sesi kuki yang memenuhi
     return h.response('autentikasi dibutuhkan!').code(401);
@@ -110,7 +115,12 @@ function readPatientHandler(request, h) { // mendapatkan semua data pasien
   if (!isPrevilegeAllowed) { // jika tidak diizinkan
     return h.response('anda tidak diizinkan!').code(405);
   }
-  response = patients; // ubah respon menjadi pasien
+  if (filter) {
+    const filteredPatients = patients.filter((patient) => patient.name.toLowerCase().includes(nama.toLowerCase())); // semua pembanding menjadi lowercase
+    response = filteredPatients;
+  } else {
+    response = patients; // ubah respon menjadi pasien
+  }
   return h.response(response);
 }
 

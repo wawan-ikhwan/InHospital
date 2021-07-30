@@ -2,7 +2,7 @@
   {
     "id": "230b072c5d25fcfe",
     "entry": "Wed Jul 28 2021 16:29:02 GMT+0700 (Western Indonesia Time)",
-    "name": "awikwok",
+    "name": "robet",
     "age": "69",
     "room": "99",
     "disease": "awikwok"
@@ -14,5 +14,13 @@
     "age": "69",
     "room": "99",
     "disease": "awikwok"
+  },
+  {
+    "id": "5d8dfbfc7475e707",
+    "entry": "Wed Jul 28 2021 16:29:41 GMT+0700 (Western Indonesia Time)",
+    "name": "robet gilo",
+    "age": "69",
+    "room": "99",
+    "disease": "diabetes"
   }
 ]
